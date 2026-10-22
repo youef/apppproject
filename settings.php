@@ -1,6 +1,6 @@
 <?php
-require __DIR__.'/src/bootstrap.php';
-require_admin();
+require __DIR__.'/src/commerce.php';
+require_admin();if(role()!=='owner'){http_response_code(403);exit('غير مصرح');}
 $defaults=['site_name'=>'نَسَق','site_tagline'=>'أعمالك بنسق مختلف','site_description'=>'منصة الأعمال والحلول الرقمية','contact_email'=>'','contact_phone'=>'','hero_title'=>'أفكار طموحة. تنفيذ بنسق مختلف.','hero_description'=>'منصة تجمع تطوير البرمجيات والحلول التقنية والمنتجات الرقمية في تجربة واحدة.'];
 $error='';$success='';
 try{$q=db()->query('SELECT setting_key,setting_value FROM site_settings');$settings=array_replace($defaults,$q->fetchAll(PDO::FETCH_KEY_PAIR));}catch(PDOException $e){http_response_code(503);exit('يلزم استيراد ملف database-upgrade-v2.sql من phpMyAdmin لتفعيل الإعدادات.');}
